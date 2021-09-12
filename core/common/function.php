@@ -260,4 +260,19 @@ function delTree($dir) {
     }
 
     return rmdir($dir); 
-} 
+}
+
+function scandirFolderWithoutFolder($path) {
+    $list = [];
+    $temp_list = scandir($path);
+    foreach ($temp_list as $file) {
+        //排除根目錄
+        if ($file != ".." && $file != ".") {
+            if (!is_dir($path . "/" . $file)) {
+                //根目錄下的檔案
+                $list[] = '/' . $file;
+            }
+        }
+    }
+    return $list;
+}

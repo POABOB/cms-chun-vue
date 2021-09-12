@@ -1246,6 +1246,11 @@ class apiController extends \core\PPP {
         if(is_dir(PPP . '/log/twig/')) {
             delTree(PPP . '/log/twig/');
         }
+
+        if(is_dir(PPP . '/public')) {
+            delTree(PPP . '/public');
+            mkdir(PPP . '/public', 0755);
+        }
         
         json(new resModel(200, '刪除cache成功'));
     }

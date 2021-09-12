@@ -16,6 +16,7 @@ define('MODULE','app');
 define('URL','');
 define('HTTP','http://');
 define('ASSET', APP.'/views/store');
+define('PUBLICS', PPP.'/public');
 //DEBUG模式開關
 define('DEBUG', true);
 
