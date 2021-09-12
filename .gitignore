@@ -1,8 +1,9 @@
 vendor/
 something/
-log/
+log/*
 core/config/database.php
 vue-admin-template/node_modules
+public/*
 *.zip
 vue-admin-template/.DS_Store
 vue-admin-template/dist/

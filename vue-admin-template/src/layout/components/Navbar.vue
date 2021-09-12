@@ -16,6 +16,9 @@
               回到前台
             </el-dropdown-item>
           </a>
+          <el-dropdown-item divided @click.native="clear">
+            <span style="display:block;">清除Cache</span>
+          </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">登出</span>
           </el-dropdown-item>
@@ -29,6 +32,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import request from '@/utils/request'
 
 export default {
   components: {
@@ -48,7 +52,29 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-    }
+    },
+    clear() {
+      request({
+        url: '/twig',
+        method: 'get'
+      }).then(response => {
+        if(response.code === 200) {
+          this.$notify({
+            title: response.message,
+            type: 'success',
+            duration: 1500
+          })
+        } else {
+          this.$notify({
+            title: response.message,
+            type: 'error',
+            duration: 1500
+          })
+        }
+      }).catch(error => {
+        alert(error)
+      })
+    },
   }
 }
 </script>

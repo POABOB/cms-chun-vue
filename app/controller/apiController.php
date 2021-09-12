@@ -1064,7 +1064,7 @@ class apiController extends \core\PPP {
         
         $mailer = new Mailer();
         $mailer->setMessage(
-            '來自網站留言:' . $post['name'],
+            "來自網站留言:" . $post['name'],
             $post['email'],
             // 'Chunspacedesign@gmail.com',
             // 'zxc752166@gmail.com',
@@ -1243,7 +1243,10 @@ class apiController extends \core\PPP {
 
     //delete twig
     public function twig() {
-        delTree(PPP . '/log/twig/');
+        if(is_dir(PPP . '/log/twig/')) {
+            delTree(PPP . '/log/twig/');
+        }
+        
         json(new resModel(200, '刪除cache成功'));
     }
 }

@@ -1,7 +1,7 @@
 {
 	"name": "php/ppp",
 	"description": "PHP Framework",
-	"type": "Framework",
+	"type": "framework",
 	"keywords": [
 		"PHP", "PHP Framework"
 	],
@@ -12,5 +12,4 @@
         "phpmailer/phpmailer": "^6.5",
         "twig/twig": "*"
 	}
-
 }
