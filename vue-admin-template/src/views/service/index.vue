@@ -144,6 +144,7 @@ import { getService,
   insertService,
   updateService,
   deleteService } from '@/api/service'
+import { clearCache } from '@/api/clear'
 
 export default {
   filters: {
@@ -203,6 +204,7 @@ export default {
       this.listLoading = true
       getService().then(response => {
         const data = (response.data === null) ? [] : JSON.parse(JSON.stringify(response.data))
+        clearCache()
         this.list = data
         this.fullList = data
         this.listLoading = false

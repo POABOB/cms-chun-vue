@@ -18,6 +18,7 @@
 <script>
 import { getAbout,
   updateAbout } from '@/api/aboutus'
+import { clearCache } from '@/api/clear'
 export default {
   data() {
     return {
@@ -41,6 +42,7 @@ export default {
       getAbout().then(response => {
         if (response.data !== null) {
           this.form = JSON.parse(JSON.stringify(response.data))
+          clearCache()
         }
       })
     },

@@ -207,6 +207,7 @@ import { getContactUS,
   insertContactUS,
   updateContactUS,
   deleteContactUS } from '@/api/contactus'
+import { clearCache } from '@/api/clear'
 
 export default {
   filters: {
@@ -290,6 +291,7 @@ export default {
       this.listLoading = true
       getContactUS().then(response => {
         const data = (response.data === null) ? [] : JSON.parse(JSON.stringify(response.data))
+        clearCache()
         this.list = data
         this.fullList = data
         this.listLoading = false

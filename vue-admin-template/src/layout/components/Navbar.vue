@@ -32,7 +32,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-import request from '@/utils/request'
+import { clearCache } from '@/api/clear'
 
 export default {
   components: {
@@ -54,10 +54,7 @@ export default {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     clear() {
-      request({
-        url: '/twig',
-        method: 'get'
-      }).then(response => {
+      clearCache().then(response => {
         if(response.code === 200) {
           this.$notify({
             title: response.message,

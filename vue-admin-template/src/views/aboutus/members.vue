@@ -180,6 +180,7 @@ import { getAboutUSMember,
   updateAboutUSMember,
   deleteAboutUSMember,
   removeAboutUSMemberFile } from '@/api/aboutus'
+import { clearCache } from '@/api/clear'
 import { getToken } from '@/utils/auth'
 export default {
   filters: {
@@ -253,6 +254,7 @@ export default {
       this.listLoading = true
       getAboutUSMember().then(response => {
         const data = (response.data === null) ? [] : JSON.parse(JSON.stringify(response.data))
+        clearCache()
         this.list = data[0]
         this.fullList = data[0]
         this.localFile = data[1]
