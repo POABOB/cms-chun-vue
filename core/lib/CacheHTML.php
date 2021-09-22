@@ -61,6 +61,7 @@ class CacheHTML {
         if($folder_name != "") {
             $arr = $this->get_html($folder_name);
             if($arr != false && count($arr) == 1) {
+                blob_etag($this->folder . $folder_name . $arr[0]);
                 include($this->folder . $folder_name . $arr[0]);
                 exit();
             }

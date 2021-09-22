@@ -162,33 +162,20 @@ function array_find(array $array, callable $callback) {
     }
 }
 
-function blob_etag($file, $datetime) {
+function blob_etag($file) {
     // ETAG LAST-MODYFIED
-    $last_modified  = strtotime($datetime);
+    $last_modified_time  = filemtime($file);
+    $etag = md5_file($file);
 
-    $modified_since = ( isset( $_SERVER["HTTP_IF_MODIFIED_SINCE"] ) ? strtotime( $_SERVER["HTTP_IF_MODIFIED_SINCE"] ) : false );
-    $etagHeader     = ( isset( $_SERVER["HTTP_IF_NONE_MATCH"] ) ? trim( $_SERVER["HTTP_IF_NONE_MATCH"] ) : false );
-
-    // This is the actual output from this file (in your case the xml data)
-    $content = $file;
-    // generate the etag from your output
-    $etag = sprintf( '"%s-%s"', $last_modified, md5($content));
-
-    //set last-modified header
-    header( "Last-Modified: ".gmdate( "D, d M Y H:i:s", $last_modified )." GMT" );
-    //set etag-header
+    header( "Last-Modified: ".gmdate( "D, d M Y H:i:s", $last_modified_time )." GMT" );
     header( "Etag: ".$etag );
-    header('Cache-Control: public');
+
 
     // if last modified date is same as "HTTP_IF_MODIFIED_SINCE", send 304 then exit
-    if ((int)$modified_since === (int)$last_modified && $etag === $etagHeader ) {
+    if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == $last_modified_time || @trim($_SERVER['HTTP_IF_NONE_MATCH']) == $etag) {
         header( "HTTP/1.1 304 Not Modified" );
         exit;
     }
-
-    header("Content-type: image/jpg;charset=utf-8");
-    echo $content;
-    exit();
 }
 
 function generatorPassword($password_len) {
@@ -213,7 +200,7 @@ function base_url($string = '/')
 			$string = '/'.$string;
 		}
 	}
-	return HTTP.$_SERVER['SERVER_NAME'].URL.$string;
+	return HTTP.$_SERVER['HTTP_HOST'].URL.$string;
 }
 
 function site_url($string = '/')
