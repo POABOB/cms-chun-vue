@@ -169,12 +169,12 @@ function blob_etag($file) {
 
     header( "Last-Modified: ".gmdate( "D, d M Y H:i:s", $last_modified_time )." GMT" );
     header( "Etag: ".$etag );
-
-
-    // if last modified date is same as "HTTP_IF_MODIFIED_SINCE", send 304 then exit
-    if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == $last_modified_time || @trim($_SERVER['HTTP_IF_NONE_MATCH']) == $etag) {
-        header( "HTTP/1.1 304 Not Modified" );
-        exit;
+    header('Cache-Control: public');    // if last modified date is same as "HTTP_IF_MODIFIED_SINCE", send 304 then exit
+    if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) || isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
+        if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == $last_modified_time || @trim($_SERVER['HTTP_IF_NONE_MATCH']) == $etag) {
+            header( "HTTP/1.1 304 Not Modified" );
+            exit;
+        }
     }
 }
 
